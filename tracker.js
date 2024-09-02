@@ -39,7 +39,7 @@ app.post('/api/users/:_id/exercises', (req, res) => {
     date: date ? new Date(date).toDateString() : new Date().toDateString()
   };
   exercises.push(exercise);
-  res.json(user);
+  res.json({user,exercise});
 });
 
 app.get('/api/users/:_id/logs', (req, res) => {
