@@ -39,12 +39,12 @@ app.post('/api/users/:_id/exercises', (req, res) => {
     date: date ? new Date(date).toDateString() : new Date().toDateString()
   };
   exercises.push(exercise);
-  const response = {
-    username: user.username,
-    _id: user._id,
-    exercise: exercise
-  };
-  res.json({user:response});
+  
+  res.json({username: user.username,
+				description: exercise.description,
+				duration: exercise.duration,
+				date: new Date(exercise.date).toDateString(),
+				_id: user._id,});
 });
 
 app.get('/api/users/:_id/logs', (req, res) => {
