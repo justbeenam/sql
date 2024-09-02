@@ -58,6 +58,19 @@ app.get("/api/:date?", (req, res) => {
   });
 });
 
+app.get('/api/whoami', (req, res) => {
+  const ipaddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  
+  const language = req.headers['accept-language'] ? req.headers['accept-language'].split(',')[0] : 'unknown';
+
+  const software = req.headers['user-agent'] || 'unknown';
+
+  res.json({
+    ipaddress,
+    language,
+    software
+  });
+});
 
 // Listen on port set in environment variable or default to 3000
 var listener = app.listen(process.env.PORT || 3000, function () {
