@@ -27,17 +27,29 @@ app.get("/api/hello", function (req, res) {
 
 app.get("/api/:date?", (req, res) => {
   const dateParam = req.params.date;
-  let isValidDate = Date.parse(input);
-  let isValidUnixNumber = /^[0-9]+$/.test(input)
-  let isEmpty = input == "" || input == null;
+  let isValidDate = Date.parse(dateParam);
+  let isValidUnixNumber = /^[0-9]+$/.test(dateParam)
+  let isEmpty = dateParam == "" || dateParam == null;
   let unix = 0;
   let utc  = "";
 
   if (isValidDate) {
     unix = new Date(dateParam);
-    utc  = unix_output.toUTCString();
+    utc  = unix.toUTCString();
   
     return res.json({unix : unix.valueOf(), utc : utc});
+  }else if (isNaN(isValidDate) && isValidUnixNumber) {
+    unix = new Date(parseInt(dateParam));
+    utc  = unix.toUTCString();
+    return res.json({unix : unix.valueOf(), utc : utc});
+  }
+  else if (isEmpty) {
+    unix = new Date();
+    utc  = unix.toUTCString();
+    return res.json({unix : unix.valueOf(), utc : utc});  
+  }
+  else {
+    res.json({error: "Invalid Date"});
   }
 
   return res.json({
