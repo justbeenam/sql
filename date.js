@@ -20,7 +20,7 @@ app.get("/", function (req, res) {
 
 function formatDate(date) {
   return {
-    unix: date.getTime(),
+    unix: parseInt(date.getTime()),
     utc: date.toUTCString()
   };
 }
@@ -49,7 +49,7 @@ app.get("/api/:date?", (req, res) => {
     return res.json({ error: 'Invalid Date' });
   }
 
-  res.json(formatDate(date));
+  return res.json(formatDate(date));
 });
 
 
