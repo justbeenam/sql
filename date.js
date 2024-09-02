@@ -18,12 +18,7 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
-function formatDate(date) {
-  return {
-    unix: parseInt(date.getTime()),
-    utc: date.toUTCString()
-  };
-}
+
 
 // your first API endpoint... 
 app.get("/api/hello", function (req, res) {
@@ -49,7 +44,10 @@ app.get("/api/:date?", (req, res) => {
     return res.json({ error: 'Invalid Date' });
   }
 
-  return res.json(formatDate(date));
+  return res.json({
+    unix: parseInt(date.getTime()),
+    utc: date.toUTCString()
+  });
 });
 
 
